@@ -248,6 +248,8 @@ public class ContextLoader {
 
 
 	/**
+	 * ServletContext 对象是一个为整个 web 应用提供共享的内存，任何请求都可以访问里面的内容
+	 *
 	 * Initialize Spring's web application context for the given servlet context,
 	 * using the application context provided at construction time, or creating a new one
 	 * according to the "{@link #CONTEXT_CLASS_PARAM contextClass}" and

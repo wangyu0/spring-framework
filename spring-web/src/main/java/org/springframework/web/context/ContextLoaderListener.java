@@ -20,6 +20,13 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
+ * 监听 ServletContext 对象的生命周期，实际上就是监听 Web 应用的生命周期。
+ * 当Servlet 容器启动或终止Web 应用时，会触发ServletContextEvent 事件
+ * 在Web 应用的生命周期中，ServletContext 对象最早被创建，最晚被销毁
+ *
+ * 通常是配置在web.xml中的监听器
+ * 是spring初始化的入口
+ *
  * Bootstrap listener to start up and shut down Spring's root {@link WebApplicationContext}.
  * Simply delegates to {@link ContextLoader} as well as to {@link ContextCleanupListener}.
  *
@@ -57,7 +64,7 @@ public class ContextLoaderListener extends ContextLoader implements ServletConte
 	}
 
 	/**
-	 * Create a new {@code ContextLoaderListener} with the given application context. This
+	 * Create a new {@code ContextLoaderListener} with the given app lication context. This
 	 * constructor is useful in Servlet 3.0+ environments where instance-based
 	 * registration of listeners is possible through the {@link javax.servlet.ServletContext#addListener}
 	 * API.
@@ -97,6 +104,8 @@ public class ContextLoaderListener extends ContextLoader implements ServletConte
 
 	/**
 	 * Initialize the root web application context.
+	 * 当Servlet 容器启动Web 应用时调用该方法。在调用完该方法之后，
+	 * 容器再对Filter 初始化，并且对那些在Web 应用启动时就需要被初始化的Servlet 进行初始化。
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
@@ -106,6 +115,8 @@ public class ContextLoaderListener extends ContextLoader implements ServletConte
 
 	/**
 	 * Close the root web application context.
+	 * 当Servlet 容器终止Web 应用时调用该方法。
+	 * 在调用该方法之前，容器会先销毁所有的Servlet 和Filter 过滤器
 	 */
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
